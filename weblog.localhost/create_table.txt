@@ -1,0 +1,27 @@
+CREATE TABLE user(
+    id INTEGER AUTO_INCREMENT,
+    user_name VARCHAR(20) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    time_stamp DATETIME,
+    PRIMARY KEY(id),
+    UNIQUE KEY user_name_index(user_name)
+) ENGINE = INNODB;
+
+CREATE TABLE status(
+    id INTEGER AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    message VARCHAR(255),
+    time_stamp DATETIME,
+    PRIMARY KEY(id),
+    INDEX user_id_index(user_id)
+) ENGINE = INNODB;
+
+CREATE TABLE followingUser(
+    user_id INTEGER,
+    following_id INTEGER,
+    PRIMARY KEY(user_id, following_id)
+) ENGINE = INNODB;
+
+ALTER TABLE status ADD FOREIGN KEY (user_id) REFERENCES user(id);
+ALTER TABLE followingUser ADD FOREIGN KEY (user_id) REFERENCES user(id);
+ALTER TABLE followingUser ADD FOREIGN KEY (following_id) REFERENCES user(id);
